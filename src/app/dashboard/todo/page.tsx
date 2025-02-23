@@ -1,10 +1,14 @@
+import { getAllTodo } from "@/actions/todo";
 import { DataTable } from "@/components/todo/table";
+import { Todo } from "@prisma/client";
 import React from "react";
 
-const page: React.FC = () => {
+const page: React.FC = async () => {
+  const todoList = (await getAllTodo()) as Todo[];
+
   return (
     <>
-      <DataTable />
+      <DataTable data={todoList} />
     </>
   );
 };

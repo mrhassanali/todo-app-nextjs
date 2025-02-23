@@ -14,6 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Todo } from "@prisma/client";
+import { AddEditTodo } from "./add-edit-todo";
+import { deleteTodo } from "@/actions/todo";
 
 export const columns: ColumnDef<Todo>[] = [
   {
@@ -47,23 +49,23 @@ export const columns: ColumnDef<Todo>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText("")}>
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="space-x-2">
+          <AddEditTodo
+            todo={row.original}
+            trigger={
+              <Button variant="default" className="ml-auto">
+                Edit Todo
+              </Button>
+            }
+          />
+          <Button
+            variant="destructive"
+            className="ml-auto"
+            onClick={() => deleteTodo(row.original.id)}
+          >
+            Delete
+          </Button>
+        </div>
       );
     },
   },
