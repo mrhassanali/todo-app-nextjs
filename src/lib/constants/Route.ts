@@ -5,3 +5,4 @@ export const DOMAIN: string =
 export const ROOT: string = `/`;
 export const LOGIN: string = `${ROOT}login`;
 export const SIGN_OUT: string = `${ROOT}signout`;
+export const DASHBOARD: string = `${ROOT}dashboard`;
