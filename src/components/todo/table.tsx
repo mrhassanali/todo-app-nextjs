@@ -20,7 +20,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -32,7 +31,6 @@ import {
 import { columns } from "@/components/todo/column";
 import { Todo } from "@prisma/client";
 import { AddEditTodo } from "./add-edit-todo";
-import { addTodo } from "@/actions/todo";
 
 export function DataTable({ data }: { data: Todo[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -65,15 +63,6 @@ export function DataTable({ data }: { data: Todo[] }) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-end py-4">
-        {/* <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        /> */}
-
         <div className="space-x-1">
           <AddEditTodo
             trigger={
@@ -82,7 +71,7 @@ export function DataTable({ data }: { data: Todo[] }) {
               </Button>
             }
           />
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">

@@ -1,5 +1,4 @@
 import prisma from "@/lib/db";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { getServerSession, type NextAuthOptions } from "next-auth";
 
 import type {
@@ -11,7 +10,6 @@ import { DASHBOARD, LOGIN, SIGN_OUT } from "../constants/Route";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
-  // adapter: PrismaAdapter(prisma),
   pages: {
     signIn: LOGIN,
     signOut: SIGN_OUT,
@@ -29,11 +27,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async redirect({ url, baseUrl }) {
+    async redirect() {
       // Always redirect to dashboard after successful sign in
       return DASHBOARD;
     },
-    async signIn({ account, profile }) {
+    async signIn({ profile }) {
       if (profile) {
         await prisma.user.upsert({
           where: {
@@ -52,11 +50,11 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
-    async session({ session, token, user }) {
+    async session({ session, user }) {
       session.user = user;
       return session;
     },
-    async jwt({ token, user, account, profile }) {
+    async jwt({ token, profile }) {
       if (profile) {
         const user = await prisma.user.findUnique({
           where: {
