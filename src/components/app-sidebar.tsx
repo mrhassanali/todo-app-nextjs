@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 
 import SidebarLogo from "@/components/sidebar-logo";
@@ -13,8 +14,11 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { ClipboardList } from "lucide-react";
-import { TODOS } from "@/lib/constants/Route";
+import { ClipboardList, Home } from "lucide-react";
+import { DASHBOARD, TODOS } from "@/lib/constants/Route";
+import { getNavigationItems } from "@/lib/utils/sidebarUtils";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 // This is sample data.
 const data = {
@@ -24,9 +28,14 @@ const data = {
       url: "#",
       items: [
         {
+          title: "Home",
+          url: DASHBOARD,
+          isActive: true,
+          icon: Home,
+        },
+        {
           title: "Todos",
           url: TODOS,
-          isActive: true,
           icon: ClipboardList,
         },
       ],
@@ -35,6 +44,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
   return (
     <Sidebar {...props}>
       <SidebarHeader>
@@ -47,10 +57,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item) => (
+                {getNavigationItems(pathname, item.items).map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                      <Link href={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
