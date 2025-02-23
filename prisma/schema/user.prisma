@@ -1,0 +1,33 @@
+model AppUser {
+  id             String  @id @default(cuid())
+  name           String?
+  email          String  @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  user               AppUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type               String
+  provider           String
+  providerAccountId  String  @unique
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         AppUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+}
