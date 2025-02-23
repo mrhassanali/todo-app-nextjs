@@ -8,4 +8,4 @@ export const SIGN_OUT: string = `${ROOT}signout`;
 export const VERIFY_REQUEST: string = `${ROOT}/api/auth/callback/google`;
 export const DASHBOARD: string = `${ROOT}dashboard`;
 
-export const TODOS: string = `${DASHBOARD}/todos`;
+export const TODOS: string = `${DASHBOARD}/todo`;

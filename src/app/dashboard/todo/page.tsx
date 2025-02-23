@@ -1,13 +1,10 @@
-import React from 'react';
+import { DataTable } from "@/components/todo/table";
+import React from "react";
 
-interface pageProps {
-  /* Add props here */
-}
-
-const page: React.FC<pageProps> = () => {
+const page: React.FC = () => {
   return (
     <>
-      Add Todo
+      <DataTable />
     </>
   );
 };
